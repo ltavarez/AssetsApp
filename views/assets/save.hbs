@@ -1,0 +1,71 @@
+{{#if hasAssetsTypes}}
+
+<div class="row d-flex justify-content-center">
+  <div class="col-12 col-sm-5">
+
+    <div class="card">
+      <div class="card-header bg-primary text-light text-center">
+       <i class="bi bi-credit-card-2-front"></i>{{#if editMode}} Edit assets {{asset.name}} {{else}} Create new assets  {{/if}}
+      </div>
+      <div class="card-body">
+
+        <form enctype="multipart/form-data" method="POST" action="/assets/{{#if editMode}}edit{{else}}create{{/if}}">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" value="{{#if editMode}}{{asset.name}}{{/if}}" class="form-control" id="name" name="Name" required="required" />
+          </div> 
+             <div class="mb-3">
+            <label for="symbol" class="form-label">Symbol:</label>
+            <input type="text" value="{{#if editMode}}{{asset.symbol}}{{/if}}" class="form-control" id="symbol" name="Symbol" required="required" />
+          </div> 
+          <div class="mb-3">
+            <label for="logo" class="form-label">Logo (Select a image):</label>
+            <input type="file" value="{{#if editMode}}{{asset.logo}}{{/if}}" class="form-control" id="logo" name="Logo" {{#if editMode}}{{else}}required="required"{{/if}} />
+          </div> 
+          <div class="mb-3">
+            <label for="assets-type" class="form-label">Assets type:</label>
+            <select id="assets-type" class="form-select" name="AssetsTypeId" required="required">
+              <option value="">Select some option</option>
+           {{#each assetsTypesList}}
+              <option value="{{this._id}}" {{#if (eq this._id ../asset.assetTypeId)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+            </select>
+          </div> 
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              type="text"
+              class="form-control"
+              id="description"
+              name="Description"
+              required="required"
+            >{{#if editMode}}{{asset.description}}{{/if}}</textarea>
+          </div>
+
+            {{#if editMode}}
+                <input type="hidden" name="AssetsId" value="{{asset._id}}" />            
+             {{/if}}
+
+          <button type="submit" class="btn btn-primary float-end"><i class="bi bi-floppy"></i> Save</button>
+           <a href="/assets/index" class="btn btn-warning float-end me-2"><i class="bi bi-arrow-left"></i> Back to list</a>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{{else}}
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 col-sm-4">
+      <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i>
+        You have no assets types registered. <a href="/assets-type/create" class="alert-link">Create one</a> to be able to create assets.
+      </div>
+    </div>
+  </div>
+
+{{/if}}
+

@@ -1,0 +1,59 @@
+<div class="row">
+  <h1 class="text-center">Assets type list</h1>
+</div>
+
+<div class="row mt-2 mb-2">
+  <div class="col-12 col-sm-4">
+    <a href="/assets-type/create" class="btn btn-success"><i
+        class="bi bi-bookmark-plus"
+      ></i>
+      New assets type</a>
+  </div>
+</div>
+
+{{#if hasAssetsTypes}}
+
+  <div class="row">
+    {{#each assetsTypesList}}
+
+      <div class="col-12 col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text">{{this.description}}</p>
+            <div class="mt-2">
+              <a href="/assets-type/edit/{{this._id}}" class="btn btn-primary float-end"><i
+                  class="bi bi-pencil"
+                ></i>
+                Edit</a>
+              <form method="post" action="/assets-type/delete" class="float-end me-2">
+                <input type="hidden" value="{{this._id}}" name="AssetsTypeId" />
+                <button
+                  type="submit"
+                  class="btn btn-danger float-end me-2 delete-assets-type"
+                ><i class="bi bi-trash3"></i> Delete</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {{/each}}
+  </div>
+
+{{else}}
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 col-sm-4">
+      <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i>
+        You have no assets types registered.
+      </div>
+    </div>
+  </div>
+
+{{/if}}
+{{#section "scripts"}}
+  <script src="/assets/js/site/assets-type/index.js"></script>
+{{/section}}
